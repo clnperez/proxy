@@ -34,12 +34,12 @@ bind(
     actual = "//external:ssl",
 )
 
-ENVOY_SHA = "e6f7b7580ea58397e52f731440533eb6b755fd0c"
+ENVOY_SHA = "16e60b48be15ab3220359becbe35378aa80d57cc"
 
 http_archive(
     name = "envoy",
     strip_prefix = "envoy-" + ENVOY_SHA,
-    url = "https://github.com/envoyproxy/envoy/archive/" + ENVOY_SHA + ".zip",
+    url = "https://github.com/clnperez/envoy/archive/" + ENVOY_SHA + ".zip",
 )
 
 load("@envoy//bazel:repositories.bzl", "envoy_dependencies")
