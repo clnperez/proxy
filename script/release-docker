@@ -47,10 +47,6 @@ BAZEL_TARGET="${BAZEL_TARGET_DIR}/envoy"
 RELEASE_IMAGE_NAME=${RELEASE_IMAGE_NAME:-${REPO}/${PROJECT}/envoy:${TAG}}
 DEBUG_IMAGE_NAME=${DEBUG_IMAGE_NAME:-${REPO}/${PROJECT}/envoy-debug:${TAG}}
 
-if [[ ${1-} != "debug" ]] ; then
-   gcloud docker --authorize-only
-fi
-
 echo Publishing debug docker image
 rm -f ${BAZEL_TARGET_DIR}/envoy
 bazel build -c dbg //src/envoy
@@ -60,10 +56,6 @@ cp tools/deb/envoy.json ${BAZEL_TARGET_DIR}
 cp docker/proxy-* ${BAZEL_TARGET_DIR}
 cp docker/Dockerfile.debug ${BAZEL_TARGET_DIR}
 docker build -f ${BAZEL_TARGET_DIR}/Dockerfile.debug -t "${DEBUG_IMAGE_NAME}" ${BAZEL_TARGET_DIR}
-
-if [[ ${1-} != "debug" ]] ; then
-   gcloud docker -- push "${DEBUG_IMAGE_NAME}"
-fi
 
 if [[ ${1-} == "debug" ]] ; then
   # Don't push the opt image.
@@ -79,5 +71,4 @@ cp tools/deb/envoy.json ${BAZEL_TARGET_DIR}
 cp docker/proxy-* ${BAZEL_TARGET_DIR}
 cp docker/Dockerfile.release ${BAZEL_TARGET_DIR}
 docker build -f ${BAZEL_TARGET_DIR}/Dockerfile.release -t "${RELEASE_IMAGE_NAME}" ${BAZEL_TARGET_DIR}
-gcloud docker -- push "${RELEASE_IMAGE_NAME}"
 
