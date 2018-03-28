@@ -46,10 +46,13 @@ BAZEL_TARGET_DIR="bazel-bin/src/envoy"
 BAZEL_TARGET="${BAZEL_TARGET_DIR}/envoy"
 RELEASE_IMAGE_NAME=${RELEASE_IMAGE_NAME:-${REPO}/${PROJECT}/envoy:${TAG}}
 DEBUG_IMAGE_NAME=${DEBUG_IMAGE_NAME:-${REPO}/${PROJECT}/envoy-debug:${TAG}}
+#export BAZEL_COMPILER=/usr/bin/gcc // this has to be a c++ compiler
+#export BAZEL_USE_CPP_ONLY_TOOLCHAIN=0 ?
+#export CC=/usr/bin/g++ mangling error from libtool
 
 echo Publishing debug docker image
-rm -f ${BAZEL_TARGET_DIR}/envoy
-bazel build -c dbg //src/envoy
+rm -rf ${BAZEL_TARGET_DIR}/envoy
+bazel build -c dbg --subcommands --sandbox_debug --verbose_failures //src/envoy
 cp tools/deb/istio-iptables.sh ${BAZEL_TARGET_DIR}
 cp tools/deb/istio-start.sh ${BAZEL_TARGET_DIR}
 cp tools/deb/envoy.json ${BAZEL_TARGET_DIR}
@@ -63,8 +66,8 @@ if [[ ${1-} == "debug" ]] ; then
 fi
 
 echo Publishing release docker image
-rm -f ${BAZEL_TARGET_DIR}/envoy
-bazel build --config=release //src/envoy
+rm -rf ${BAZEL_TARGET_DIR}/envoy
+bazel build --config=release  --verbose_failures //src/envoy
 cp tools/deb/istio-iptables.sh ${BAZEL_TARGET_DIR}
 cp tools/deb/istio-start.sh ${BAZEL_TARGET_DIR}
 cp tools/deb/envoy.json ${BAZEL_TARGET_DIR}
