@@ -52,7 +52,7 @@ DEBUG_IMAGE_NAME=${DEBUG_IMAGE_NAME:-${REPO}/${PROJECT}/envoy-debug:${TAG}}
 
 echo Publishing debug docker image
 rm -rf ${BAZEL_TARGET_DIR}/envoy
-bazel build -c dbg --subcommands --sandbox_debug --verbose_failures //src/envoy
+bazel build -c dbg -s --subcommands --sandbox_debug --verbose_failures --copt="-Wl,-v" //src/envoy
 cp tools/deb/istio-iptables.sh ${BAZEL_TARGET_DIR}
 cp tools/deb/istio-start.sh ${BAZEL_TARGET_DIR}
 cp tools/deb/envoy.json ${BAZEL_TARGET_DIR}
