@@ -38,12 +38,12 @@ git_repository(
 )
 
 # When updating envoy sha manually please update the sha in istio.deps file also
-ENVOY_SHA = "4dd49d8809f7aaa580538b3c228dd99a2fae92a4"
+ENVOY_SHA = "902957b4fcc474a35342455b3f52b0fea61359a8"
 
 http_archive(
     name = "envoy",
     strip_prefix = "envoy-" + ENVOY_SHA,
-    url = "https://github.com/envoyproxy/envoy/archive/" + ENVOY_SHA + ".zip",
+    url = "https://github.com/clnperez/envoy/archive/" + ENVOY_SHA + ".zip",
 )
 
 load("@envoy//bazel:repositories.bzl", "envoy_dependencies")
@@ -59,7 +59,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_too
 load("@com_lyft_protoc_gen_validate//bazel:go_proto_library.bzl", "go_proto_repositories")
 go_proto_repositories(shared=0)
 go_rules_dependencies()
-go_register_toolchains()
+go_register_toolchains(go_version="host")
 load("@io_bazel_rules_go//proto:def.bzl", "proto_register_toolchains")
 proto_register_toolchains()
 
