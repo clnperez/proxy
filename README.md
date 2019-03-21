@@ -1,5 +1,7 @@
 # Istio Proxy
 
+NOTE: This (a5d5a464251e940f2d59a23ec598deb0277a8dd3) is the rc5 commit, taken from istio.deps in istio/istio.
+
 The Istio Proxy is a microservice proxy that can be used on the client and server side, and forms a microservice mesh. The Proxy supports a large number of features.
 
 Client Side Features:
