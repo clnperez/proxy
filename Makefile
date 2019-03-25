@@ -26,12 +26,12 @@ SANITIZER_EXCLUSIONS ?= -test/integration:mixer_fault_test
 HUB ?=
 TAG ?=
 ifeq "$(origin CC)" "default"
-CC := clang-7
+CC := clang
 endif
 ifeq "$(origin CXX)" "default"
-CXX := clang++-7
+CXX := clang++
 endif
-PATH := /usr/lib/llvm-7/bin:$(PATH)
+PATH := /usr/lib/llvm/bin:$(PATH)
 
 build:
 	PATH=$(PATH) CC=$(CC) CXX=$(CXX) bazel $(BAZEL_STARTUP_ARGS) build $(BAZEL_BUILD_ARGS) $(BAZEL_TARGETS)
@@ -39,7 +39,7 @@ build:
 
 # Build only envoy - fast
 build_envoy:
-	PATH=$(PATH) CC=$(CC) CXX=$(CXX) bazel $(BAZEL_STARTUP_ARGS) build $(BAZEL_BUILD_ARGS) //src/envoy:envoy
+	bazel $(BAZEL_STARTUP_ARGS) build $(BAZEL_BUILD_ARGS) //src/envoy:envoy
 	@bazel shutdown
 
 clean:

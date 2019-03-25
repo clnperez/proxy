@@ -35,13 +35,13 @@ bind(
 # When updating envoy sha manually please update the sha in istio.deps file also
 #
 # Determine SHA256 `wget https://github.com/envoyproxy/envoy/archive/COMMIT.tar.gz && sha256sum COMMIT.tar.gz`
-ENVOY_SHA = "925810d00b0d3095a8e67fd4e04e0f597ed188bb"
-ENVOY_SHA256 = "26d1f14e881455546cf0e222ec92a8e1e5f65cb2c5761d63c66598b39cd9c47d"
+ENVOY_SHA = "096c5902fe422fffae8331e18996f2890b7eeda1"
+ENVOY_SHA256 = "83268a86ea249a312c2bdaf4c20cd7e823e93b0991082bcb282027833977c357"
 
 http_archive(
     name = "envoy",
     strip_prefix = "envoy-" + ENVOY_SHA,
-    url = "https://github.com/envoyproxy/envoy/archive/" + ENVOY_SHA + ".tar.gz",
+    url = "https://github.com/clnperez/envoy/archive/" + ENVOY_SHA + ".tar.gz",
     sha256 = ENVOY_SHA256,
 )
 
